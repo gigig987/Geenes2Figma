@@ -1,0 +1,8 @@
+{
+  "name": "Geenes2",
+  "id": "1133389421761675953",
+  "api": "1.0.0",
+  "main": "./dist/main/code.js",
+  "editorType": ["figma"],
+  "ui": "./dist/ui/index.html"
+}

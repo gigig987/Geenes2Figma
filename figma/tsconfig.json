@@ -1,0 +1,12 @@
+{
+  "include": ["code.ts", "code.d.ts"],
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6"],
+    "outFile": "../dist/main/code.js",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "strict": true,
+    "typeRoots": ["../node_modules/@types", "../node_modules/@figma"]
+  }
+}

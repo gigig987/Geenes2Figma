@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" debug>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geenes 2 Figma</title>
+  </head>
+  <body>
+    <main class="container">
+      <form name="main">
+        <input type="checkbox" name="is-loading" id="is-loading" hidden>
+        <output name="loading">
+          <div class="loader"></div>
+          <div class="loader-msg"></div>
+        </output>
+        <output name="ready" class="flow-v">
+          <input type="checkbox" name="authorised" id="authorised" hidden>
+          <div class="login-view">
+            <div class="onboarding-tip" id="session-expired-tip"></div>
+            <figure class="illustration">
+              <img src="https://geenes.app/img/geenes-figma.png" alt="artwork">
+            </figure>
+            <p class="">
+              Sync colours directly from your
+              <a href="https://geenes.app"  target="_BLANK">Geenes projects</a>.
+            </p>
+            <input type="checkbox" name="is-authorising" id="is-authorising" hidden>
+
+            <button name="login" value="redirect">Login</button>
+            <div>
+              <button class="text-loading" disabled>You're about to get redirected <span>.</span><span>.</span><span>.</span></button>
+              <button name="undo-login" data-type="link">Undo login</button>
+            </div>
+          </div>
+          <div class="projects-view | flow-v">
+            <header>
+              <figure class="logo background-animated "></figure>
+              <!-- <img src="./logo.svg" alt="Geenes logo" class="logo"> -->
+              <button name="refresh" data-type="link">&#10227; Refresh</button>
+            </header>
+            <section class="projects-list | flow-v">
+              <label>
+                <span>Projects</span>
+                <select name="selected-project" id="projects-list">
+                  <option value="a">Very logn title sdajk sdkjd akjdsa sadd sa dsa</option>
+                </select>
+              </label>
+              <dl class="project-details | card container">
+                <dt data-field="colors">Colours (<span class="counter"></span>)</dt>
+                <dd class="color-list">
+                  <details>
+                    <summary><span></span> changes</summary>
+                    <div class="grid column">
+                      <!-- Mock -->
+                      <div>
+                        <div class="icon icon-preflight" data-action="create" style="background: red;"></div>
+                      </div>
+                      <div>
+                        <div class="icon icon-preflight" data-action="delete" style="background: red;"></div>
+                      </div>
+                      <div>
+                        <div class="icon icon-preflight" data-action="update" style="background: red;"></div>
+                      </div>
+                      <!-- End Mock -->
+                    </div>
+                  </details>
+                  <template id="preflight-color-row">
+                      <div>
+                        <div class="icon icon-preflight"></div>
+                      </div>
+                  </template>
+                </dd>
+
+                <dt data-field="last-update">Last update on Geenes</dt>
+                <dd><div class="timeago" datetime="">1 Year ago</div></dd>
+            
+                <dt data-field="last-import">Last import on this Figma file</dt>
+                <dd><div class="timeago" datetime="">5 seconds ago</div></dd>
+            </dl>
+          </section>
+          <footer>
+            <button name="import" id="import">Import</button>
+            <button name="figma-tokens" id="figma-tokens">Read Figma tokens</button>
+            <button name="logout" data-type="link">Sign out</button>
+          </footer>
+          </div>
+        </output>
+      </form>
+    </main>
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>

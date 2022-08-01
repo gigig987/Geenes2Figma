@@ -1,0 +1,34 @@
+/* Generic loading */
+input[name="is-loading"]:not(:checked) ~ output[name="loading"] {
+  display: none;
+}
+
+input[name="is-loading"]:checked ~ output[name="ready"] {
+  display: none;
+}
+
+/* loading while login */
+input[name="is-authorising"]:checked ~ button {
+  display: none;
+}
+
+input[name="is-authorising"]:not(:checked) ~ div {
+  display: none;
+}
+
+/* Logged in or not */
+input[name="authorised"]:not(:checked) ~ div.projects-view {
+  display: none;
+}
+
+input[name="authorised"]:checked ~ div.login-view {
+  display: none;
+}
+/* Loading projects */
+input[name="fetching-projects"]:checked ~ section.projects-list {
+  display: none;
+}
+
+input[name="fetching-projects"]:not(:checked) ~ p.text-loading {
+  display: none;
+}

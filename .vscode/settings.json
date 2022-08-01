@@ -1,0 +1,13 @@
+{
+  "[vue]": {
+    "editor.defaultFormatter": "johnsoncodehk.volar"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#581034",
+    "titleBar.activeBackground": "#7B1649",
+    "titleBar.activeForeground": "#FEFCFD"
+  }
+}

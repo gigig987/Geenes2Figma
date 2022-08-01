@@ -1,0 +1,12 @@
+/*  Debug  */
+[debug] input[hidden] {
+  display: initial;
+}
+
+[debug][debug-outline] * {
+  outline: 1px solid teal;
+}
+
+:not([debug]) select:empty {
+  display: none;
+}
