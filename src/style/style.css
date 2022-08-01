@@ -3,12 +3,11 @@
   /* neutral */
 --color-0-0: #101010;
 --color-0-1: #151515;
---color-0-2: #666;
+--color-0-2: #333133;
 --color-0-3: #D5D5D5;
 --color-0-4: #FFFFFF;
 --color-0-5: #E9E9E9;
 --color-0-6: #888888;
---color-0-7: #888888;
 /* primary */
 --color-1-0: #5f42f0;
 --color-1-1: #A46AEE;
@@ -78,13 +77,13 @@
     --color-primary: var(--color-1-1);
     --color-on-primary: var(--color-0-1);
     --color-disabled: var(--color-0-2);
-    --color-on-disabled: var(--color-0-1);
+    --color-on-disabled: var(--color-0-6);
     --color-surface: var(--color-0-1);
     --color-on-surface: var(--color-0-3);
     --color-on-surface-tuned-down: var(--color-0-6);
     --color-surface-deep: var(--color-0-0);
     --color-on-surface-deep: var(--color-0-4);
-    --color-surface-raised: var(--color-0-5);
+    --color-surface-raised: var(--color-0-2);
     --color-on-surface-raised: var(--color-0-3);
     --color-secondary: var(--color-0-2);
     --color-on-secondary: var(--color-0-3);
@@ -113,6 +112,7 @@ a {
 
 button {
   display: inline-flex;
+  justify-content: center;
   padding: var(--spacing-button, 0.5rem);
   line-height: 1;
   cursor: pointer;
@@ -191,8 +191,7 @@ dd {
 }
 
 .color-list details[open] .grid{ 
-  max-height: 200px;
-  overflow: auto;
+  min-height: 3rem;
 }
 
 .icon-preflight {
@@ -234,26 +233,26 @@ dd {
   position: absolute;
 }
 
-label {
+label.select {
   position: relative;
   display: inline-block;
   max-width: 100%;
 }
 
-label:before {
+label.select:before {
   content: "";
   height: 31px;
   position: absolute;
   right: 7px;
   bottom: 7px;
   width: 22px;
-  background: var(--color-surface);
+  background: var(--color-surface-raised);
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   pointer-events: none;
   display: block;
 }
-label:after {
+label.select:after {
   content: " ";
   position: absolute;
   right: 15px;
@@ -325,6 +324,42 @@ main.container {
   }
 }
 
+footer {
+  position: sticky;
+  inset: auto auto 0; 
+  background-color: var(--color-surface);
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+
+  padding: var(--spacing-wrappers) 0;
+  --spacing: var(--spacing-outer);
+}
+
+output[name="loading"] {
+  position: absolute;
+  inset: var(--spacing-outer);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+blockquote {
+  font-size: var(--size-font-0-2);
+  font-weight: var(--type-weight-0-2);
+}
+figcaption {
+  font-size: var(--size-font-0-0);
+  font-weight: var(--type-weight-0-0);
+}
+
+cite {
+  font-style: italic;
+}
 /* Housekeeping */
 
 select:empty {

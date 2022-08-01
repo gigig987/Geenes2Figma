@@ -9,12 +9,17 @@ export default defineConfig({
         scopeBehaviour: 'global'
     }
   },
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
   build: {
     target: 'esnext',
     assetsInlineLimit: 100000000,
     chunkSizeWarningLimit: 100000000,
     cssCodeSplit: false,
     brotliSize: false,
+    sourcemap: false,
+    minify: 'esbuild',
     rollupOptions: {
       inlineDynamicImports: true,
       output: {

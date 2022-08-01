@@ -71,10 +71,13 @@ export const logout = async () => {
 }
 
 export const checkExistingToken = async () => {
+  state.loading = true
   state.accessToken = await getToken()
   if (state.accessToken) {
     console.log('access token set', state.accessToken)
   } else {
     console.log('NO access token')
   }
+  state.loading = false
+
 }

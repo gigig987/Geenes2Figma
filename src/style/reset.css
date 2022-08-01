@@ -12,12 +12,7 @@
   padding: 0;
   font: inherit;
 }
-/*
-  3. Allow percentage-based heights in the application
-*/
-html, body {
-  height: 100%;
-}
+
 /* Set core root defaults */
 html:focus-within {
   scroll-behavior: smooth;

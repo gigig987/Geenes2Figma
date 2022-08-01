@@ -8,9 +8,14 @@ import { importColors, preflightColors } from './features/colors'
 import { state } from './utils/state'
 import { render, cancel } from 'timeago.js'
 import { renderQuote } from './utils/quotes'
-const debugCss = import.meta.env.MODE === 'development' ? await import(`./style/debug.css`) : null
 
-// console.log('hey',import.meta.env.MODE, debugCss)
+import debugCss from './style/debug.css?raw'
+if (import.meta.env.MODE === 'development') {
+  const styleTag = document.createElement('style')
+  styleTag.id = "debug"
+  styleTag.innerHTML = debugCss as unknown as string
+  document.head.appendChild(styleTag)
+}
 
 const forms = document.forms as Forms
 
@@ -35,10 +40,9 @@ const generalLoginCtrl = (state: State, oldState: State) => {
 
   console.log('generalLoginCtrl', state.loading)
 
-  const loaderMsg = document.querySelector('.loader-msg');
-  loaderMsg!.innerHTML = renderQuote();
   forms['main'].elements['is-loading'].checked = state.loading
-
+  let change = new Event('change');
+  forms['main'].elements['is-loading'].dispatchEvent(change);
 };
 const currentProjectCtrl = async (state: State, oldState: State) => {
   if (state.currentProject === oldState.currentProject) return
@@ -158,8 +162,28 @@ forms['main'].elements['refresh'].onclick = () => forms['main'].onsubmit = (e: E
   fetchProjects()
 }
 
-forms['main'].elements['is-loading'].onchange = () => { 
+const progress = forms['main'].querySelector('progress')
+let val = 0
+let progressInterval: NodeJS.Timer
+const startProgress = () => {
+  val = 0
+  progressInterval = setInterval(() => {
+    if (val >= 100) {
+      clearInterval(progressInterval)
+    } else {
+      val++
+      progress.value = val
+      progress.innerHTML = `${val} %`
+    }
+  }, 25)
+} 
 
+const clearProgress = () => clearInterval(progressInterval)
+forms['main'].elements['is-loading'].onchange = () => { 
+  const loaderMsg = document.querySelector('.loader-msg')
+  loaderMsg!.innerHTML = renderQuote();
+  clearProgress()
+  startProgress()
 }
 
 // const figmaTokens = (): Promise<Array<any>> => {

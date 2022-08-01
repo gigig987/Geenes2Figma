@@ -120,7 +120,6 @@ const preflightColors = (payload: AddColorsPayload): Array<any> | false => {
         value: {old: paint.color},
         action: 'delete' })
     })
-    console.log(localStyles)
     // handle addition and updates
     newColors.forEach((color, i) => {
       const index = mappedColours.findIndex(mappedColour => mappedColour.split(' ')[1] === color.uid)

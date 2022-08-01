@@ -11,12 +11,12 @@
       <form name="main">
         <input type="checkbox" name="is-loading" id="is-loading" hidden>
         <output name="loading">
-          <div class="loader"></div>
+          <label>Loading <progress value="0" max="100">0 %</progress></label>
           <div class="loader-msg"></div>
         </output>
         <output name="ready" class="flow-v">
           <input type="checkbox" name="authorised" id="authorised" hidden>
-          <div class="login-view">
+          <div class="login-view | flow-v">
             <div class="onboarding-tip" id="session-expired-tip"></div>
             <figure class="illustration">
               <img src="https://geenes.app/img/geenes-figma.png" alt="artwork">
@@ -40,10 +40,9 @@
               <button name="refresh" data-type="link">&#10227; Refresh</button>
             </header>
             <section class="projects-list | flow-v">
-              <label>
+              <label class="select">
                 <span>Projects</span>
                 <select name="selected-project" id="projects-list">
-                  <option value="a">Very logn title sdajk sdkjd akjdsa sadd sa dsa</option>
                 </select>
               </label>
               <dl class="project-details | card container">
@@ -79,9 +78,9 @@
                 <dd><div class="timeago" datetime="">5 seconds ago</div></dd>
             </dl>
           </section>
-          <footer>
+          <footer class="flow-v">
             <button name="import" id="import">Import</button>
-            <button name="figma-tokens" id="figma-tokens">Read Figma tokens</button>
+            <!-- <button name="figma-tokens" id="figma-tokens">Read Figma tokens</button> -->
             <button name="logout" data-type="link">Sign out</button>
           </footer>
           </div>

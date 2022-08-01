@@ -16,7 +16,7 @@ export const renderQuote = () => {
     <blockquote cite="${citeURI}">
         <p>${paragraph}</p>
     </blockquote>
-    <figcaption>—${author} <cite>${cite}</cite></figcaption>
+    <figcaption><i>—${author} <cite>${cite}</cite></i></figcaption>
   </figure>
   `
 }
