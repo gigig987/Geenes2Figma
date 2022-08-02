@@ -12,8 +12,8 @@ export const getRandomQuote = () => quotes[quotes.length * Math.random() | 0] as
 export const renderQuote = () => {
   const {paragraph, author, cite, citeURI} = getRandomQuote()
   return `
-  <figure>
-    <blockquote cite="${citeURI}">
+  <figure class="flow-v">
+    <blockquote class="background-animated clip-text" cite="${citeURI}">
         <p>${paragraph}</p>
     </blockquote>
     <figcaption><i>—${author} <cite>${cite}</cite></i></figcaption>

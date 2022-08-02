@@ -1,7 +1,7 @@
 import './style/reset.css'
 import './style/style.css'
 import './reactivity.css'
-import { areArraysEqual } from  './utils/functions'
+import { areArraysEqual, easeOutCubic } from  './utils/functions'
 import { login, undoLogin, logout, checkExistingToken } from './features/authorisation'
 import { fetchProjects, Project, calculateLastSynch } from './features/projects'
 import { importColors, preflightColors } from './features/colors'
@@ -118,6 +118,8 @@ const fetchingProjectsCtrl = (state: State, oldState: State) => {
   state.projects
     .map(({ name, id } : Partial<Project>) => `<option value="${id}">${name}</option>`)
     .join(' ')
+
+  forms['main'].elements['number-projects'].setAttribute('value', state.projects.length)
 };
 
 // Subscribe the render function to state changes
@@ -145,7 +147,11 @@ forms['main'].elements['logout'].onclick = () => forms['main'].onsubmit = (e: Ev
   logout()
 }
 
-window.onload = () => checkExistingToken()
+window.onload = () => {
+  state.loading = true
+  document.body.removeAttribute('hidden')
+  checkExistingToken()
+}
 
 forms['main'].elements['projects-list'].onchange = () => { 
   const obj = Object.fromEntries(new FormData(forms['main']) as any)
@@ -161,29 +167,39 @@ forms['main'].elements['refresh'].onclick = () => forms['main'].onsubmit = (e: E
   e.preventDefault()
   fetchProjects()
 }
+forms['main'].elements['number-projects'].onchange = () => {
+  forms['main'].elements['number-projects'].setAttribute('value', forms['main'].elements['number-projects'].value)
+}
+// Loading part
 
-const progress = forms['main'].querySelector('progress')
-let val = 0
-let progressInterval: NodeJS.Timer
-const startProgress = () => {
-  val = 0
-  progressInterval = setInterval(() => {
-    if (val >= 100) {
-      clearInterval(progressInterval)
-    } else {
-      val++
-      progress.value = val
-      progress.innerHTML = `${val} %`
-    }
-  }, 25)
-} 
-
-const clearProgress = () => clearInterval(progressInterval)
 forms['main'].elements['is-loading'].onchange = () => { 
   const loaderMsg = document.querySelector('.loader-msg')
   loaderMsg!.innerHTML = renderQuote();
   clearProgress()
   startProgress()
+}
+
+const progress = forms['main'].querySelector('progress')
+let progressInterval: NodeJS.Timer
+
+const clearProgress = () => clearInterval(progressInterval)
+
+const startProgress = () => {
+
+  let from     = 0;  
+  let to       = 100;  
+  let duration = 3500;
+
+  var start = new Date().getTime();
+  progressInterval = setInterval(function() {
+    var time = new Date().getTime() - start
+    var x = easeOutCubic(time, from, to - from, duration)
+    progress.value = x
+    progress.innerHTML = `${x} %`
+    if (time >= duration) clearInterval(progressInterval)
+  }, 1000 / 60);
+    progress.value = from
+    progress.innerHTML = `${from} %`
 }
 
 // const figmaTokens = (): Promise<Array<any>> => {

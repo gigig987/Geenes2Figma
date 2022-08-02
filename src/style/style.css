@@ -11,6 +11,8 @@
 /* primary */
 --color-1-0: #5f42f0;
 --color-1-1: #A46AEE;
+--color-1-0-rgb: 95, 66, 240;
+--color-1-1-rgb: 164, 106, 238;
 
 
 
@@ -55,8 +57,9 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --color-primary: var(--color-1-0);
-    --color-on-primary: var(--color-0-4);
+    --color-interactive: var(--color-1-0);
+    --color-interactive-hover: rgba(var(--color-1-0-rgb), 0.8);
+    --color-on-interactive: var(--color-0-4);
     --color-disabled: var(--color-0-3);
     --color-on-disabled: var(--color-0-1);
     --color-surface: var(--color-0-4);
@@ -74,8 +77,9 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: var(--color-1-1);
-    --color-on-primary: var(--color-0-1);
+    --color-interactive: var(--color-1-1);
+    --color-interactive-hover: rgba(var(--color-1-1-rgb), 0.8);
+    --color-on-interactive: var(--color-0-1);
     --color-disabled: var(--color-0-2);
     --color-on-disabled: var(--color-0-6);
     --color-surface: var(--color-0-1);
@@ -107,7 +111,7 @@ body {
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-interactive);
 }
 
 button {
@@ -119,8 +123,12 @@ button {
   text-decoration: none;
   border: none;
   border-radius: var(--style-roundness-interactive);
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
+  background-color: var(--color-interactive);
+  color: var(--color-on-interactive);
+}
+
+button:hover {
+  background-color: var(--color-interactive-hover);
 }
 
 button:disabled {
@@ -131,11 +139,14 @@ button:disabled {
 button[data-type="link"] {
   padding: 0;
   background: transparent;
-  color: var(--color-primary);
+  color: var(--color-interactive);
   text-decoration: underline;
 }
 
-
+button[data-type="link"]:hover {
+  color: var(--color-interactive-hover);
+  text-decoration: none;
+}
 /* Header */
 
 header {
@@ -184,6 +195,7 @@ dt {
 dd {
   margin-bottom: var(--spacing, 1em);
 }
+
 /* Preflight changes on colours */
 .color-list {
   --spacing: var(--spacing-inner);
@@ -213,7 +225,6 @@ dd {
   width: 1rem;
   height: 1rem;
   text-align: center;
-  /* font-weight: bold; */
   font-size: 1.25rem;
 }
 .icon-preflight[data-action="delete"]:after {
@@ -294,36 +305,6 @@ main.container {
   padding-top: 0;
 }
 
-.loader {
-  width: 40px;
-  height: 40px;
-  margin: 0 auto;
-  background-color: var(--color-primary);
-
-  border-radius: 100%;  
-  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-  animation: sk-scaleout 1.0s infinite ease-in-out;
-}
-
-@-webkit-keyframes sk-scaleout {
-  0% { -webkit-transform: scale(0) }
-  100% {
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
-}
-
-@keyframes sk-scaleout {
-  0% { 
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 100% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-    opacity: 0;
-  }
-}
-
 footer {
   position: sticky;
   inset: auto auto 0; 
@@ -352,6 +333,7 @@ blockquote {
   font-size: var(--size-font-0-2);
   font-weight: var(--type-weight-0-2);
 }
+
 figcaption {
   font-size: var(--size-font-0-0);
   font-weight: var(--type-weight-0-0);
@@ -360,12 +342,19 @@ figcaption {
 cite {
   font-style: italic;
 }
+
+progress {
+  display: block;
+}
 /* Housekeeping */
 
 select:empty {
   display: none;
 }
-
+label.select: {
+  /* make sure that if the empty state, its sibling, is hidden there is no a weird margin top due to flow-v */
+  margin-top: 0;
+}
 /* Utility classes */
 
 .grid {
@@ -407,4 +396,13 @@ select:empty {
 }
 :where(.flow-h > :not(:first-child)) {
   margin-left: var(--spacing, 1em);
+}
+
+.clip-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-center {
+  text-align: center;
 }

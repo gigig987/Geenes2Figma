@@ -7,11 +7,12 @@
   "license": "GNU General Public License v3.0",
   "scripts": {
     "build:ui": "vite build",
+    "preview:ui": "vite build --mode=development",
     "build:main": "tsc -p ./figma/tsconfig.json",
     "watch:main": "tsc -p ./figma/tsconfig.json --watch",
     "build": "npm run build:ui && npm run build:main",
     "dev": "npm run watch:main & vite",
-    "preview": "npm run build && vite preview"
+    "preview": "npm run preview:ui && npm run build:main && vite preview"
   },
   "dependencies": {
     "timeago.js": "^4.0.2"

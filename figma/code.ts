@@ -181,7 +181,7 @@ const preflightColors = (payload: AddColorsPayload): Array<any> | false => {
 const a = null
 let windowSize = {
   width: 320,
-  height: 480,
+  height: 520,
 }
 
 figma.showUI(__html__, windowSize)

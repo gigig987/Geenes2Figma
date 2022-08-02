@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geenes 2 Figma</title>
   </head>
-  <body>
+  <body hidden>
     <main class="container">
       <form name="main">
         <input type="checkbox" name="is-loading" id="is-loading" hidden>
-        <output name="loading">
-          <label>Loading <progress value="0" max="100">0 %</progress></label>
+        <output name="loading" class="flow-v">
           <div class="loader-msg"></div>
+          <label class="text-center">Loading <progress value="0" max="100">0 %</progress></label>
         </output>
         <output name="ready" class="flow-v">
           <input type="checkbox" name="authorised" id="authorised" hidden>
-          <div class="login-view | flow-v">
+          <div class="login-view | flow-v text-center">
             <div class="onboarding-tip" id="session-expired-tip"></div>
             <figure class="illustration">
               <img src="https://geenes.app/img/geenes-figma.png" alt="artwork">
@@ -25,21 +25,23 @@
               Sync colours directly from your
               <a href="https://geenes.app"  target="_BLANK">Geenes projects</a>.
             </p>
-            <input type="checkbox" name="is-authorising" id="is-authorising" hidden>
-
-            <button name="login" value="redirect">Login</button>
-            <div>
+            <footer class="flow-v">
+              <input type="checkbox" name="is-authorising" id="is-authorising" hidden>
+              <!-- Default state -->
+              <button name="login" value="redirect">Sign in</button>
+              <!-- If logging in -->
               <button class="text-loading" disabled>You're about to get redirected <span>.</span><span>.</span><span>.</span></button>
-              <button name="undo-login" data-type="link">Undo login</button>
-            </div>
+              <button name="undo-login" data-type="link">Something wrong? Try again</button>
+            </footer>
           </div>
           <div class="projects-view | flow-v">
             <header>
               <figure class="logo background-animated "></figure>
-              <!-- <img src="./logo.svg" alt="Geenes logo" class="logo"> -->
               <button name="refresh" data-type="link">&#10227; Refresh</button>
             </header>
             <section class="projects-list | flow-v">
+              <input type="number" name="number-projects" id="number-projects" value="0" min="0" hidden>
+              <p id="no-projects-empty-state">No projects available. create one first on <a href="https://geenes.app" target="_blank">Geenes</a></p>
               <label class="select">
                 <span>Projects</span>
                 <select name="selected-project" id="projects-list">

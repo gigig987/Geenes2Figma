@@ -8,11 +8,11 @@ input[name="is-loading"]:checked ~ output[name="ready"] {
 }
 
 /* loading while login */
-input[name="is-authorising"]:checked ~ button {
+input[name="is-authorising"]:checked ~ button[name="login"] {
   display: none;
 }
 
-input[name="is-authorising"]:not(:checked) ~ div {
+input[name="is-authorising"]:not(:checked) ~ button:not([name="login"]) {
   display: none;
 }
 
@@ -31,4 +31,15 @@ input[name="fetching-projects"]:checked ~ section.projects-list {
 
 input[name="fetching-projects"]:not(:checked) ~ p.text-loading {
   display: none;
+}
+
+/* Projects state */
+#no-projects-empty-state  {
+  display: none;
+}
+input[name="number-projects"][value="0"] ~ *:not(#no-projects-empty-state) {
+  display: none;
+}
+input#number-projects[value="0"] ~ #no-projects-empty-state {
+  display: block;
 }
