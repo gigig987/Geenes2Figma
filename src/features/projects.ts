@@ -18,6 +18,19 @@ const getFigmaCurrentProject = () => {
   })
 }
 
+export const setCurrentProjectOnFigma = (): Promise<boolean> => {
+  return new Promise((resolve, reject) => {
+    onmessage = ({ data }) => {
+      if (data.pluginMessage && data.pluginMessage.type === 'setCurrentProject') {
+        resolve(data.pluginMessage.success)
+      }
+    }
+    parent.postMessage({
+      pluginMessage: { type: 'setCurrentProject', payload: state.currentProject.id },
+    }, '*')
+  })
+}
+
 const getProjects = async () => {
   const url = `https://api.geenes.app/.netlify/functions/getProjects`
   const response = await (await fetch(url, {
@@ -60,6 +73,7 @@ export const fetchProjects = async () => {
       state.projects = projects
       const figmaCurrentProject = await getFigmaCurrentProject()
       const existingProjectIndex = projects.findIndex((data: Project) => data.id === figmaCurrentProject)
+      console.log('HEEEY', existingProjectIndex, figmaCurrentProject)
       // if no current project can be found fall back on the first one
       // this can be because the project doesn't exist on geenes anymore or a current project was never set
       state.currentProject = existingProjectIndex < 0 ? projects[0] : projects[existingProjectIndex]

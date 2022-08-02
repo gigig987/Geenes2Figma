@@ -114,11 +114,14 @@ const preflightColors = (payload: AddColorsPayload): Array<any> | false => {
       const key = color.split(' ')[0]
       const indexToRemove = mappedColours.findIndex(mappedColour => mappedColour.split(' ')[0] === key)
       const j = localStyles.findIndex(style => style.key === mappedColours[indexToRemove].split(' ')[0])
-      const paint = localStyles[j].paints[0] as SolidPaint
-      result.push({ 
-        colorId: mappedColours[indexToRemove].split(' ')[1],
-        value: {old: paint.color},
-        action: 'delete' })
+      console.log(j)
+      if (j >= 0 ) { 
+        const paint = localStyles[j].paints[0] as SolidPaint
+        result.push({ 
+          colorId: mappedColours[indexToRemove].split(' ')[1],
+          value: {old: paint.color},
+          action: 'delete' })
+       }
     })
     // handle addition and updates
     newColors.forEach((color, i) => {
@@ -220,17 +223,18 @@ figma.ui.onmessage = (msg: PluginMessage) => {
       break
 
     case 'getCurrentProject':
-      figma.clientStorage.getAsync('currentProject').then(
+      figma.clientStorage.getAsync('currentProjectID').then(
         value => figma.ui.postMessage({ type: 'getCurrentProject', value }),
         () => figma.ui.postMessage({ type: 'getCurrentProject', value: null })
       )
       break
 
     case 'setCurrentProject':
-      figma.clientStorage.setAsync('currentProject', payload).then(
+      figma.clientStorage.setAsync('currentProjectID', payload).then(
         () => figma.ui.postMessage({ type: 'setCurrentProject', success: true }),
         () => figma.ui.postMessage({ type: 'setCurrentProject', success: false })
       )
+
       break
 
     case 'synchColours':

@@ -1,6 +1,6 @@
 interface PluginMessage {
   type: string;
-  payload: object;
+  payload: object | string;
 }
 
 interface GeenesColor {

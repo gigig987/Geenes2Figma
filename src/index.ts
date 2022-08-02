@@ -3,7 +3,7 @@ import './style/style.css'
 import './reactivity.css'
 import { areArraysEqual, easeOutCubic } from  './utils/functions'
 import { login, undoLogin, logout, checkExistingToken } from './features/authorisation'
-import { fetchProjects, Project, calculateLastSynch } from './features/projects'
+import { fetchProjects, Project, calculateLastSynch, setCurrentProjectOnFigma } from './features/projects'
 import { importColors, preflightColors } from './features/colors'
 import { state } from './utils/state'
 import { render, cancel } from 'timeago.js'
@@ -49,6 +49,9 @@ const currentProjectCtrl = async (state: State, oldState: State) => {
 
   console.log('currentProjectCtrl', state.currentProject)
   if (!state.currentProject) return
+  const a =  await setCurrentProjectOnFigma()
+  console.log('setCurrentProjectOnFigma', await setCurrentProjectOnFigma())
+  forms['main'].elements['projects-list'].value = state.currentProject.id
 
   const {colorsAmount, updateDate} = state.currentProject
   const counter = document.querySelector('.projects-list [data-field="colors"] .counter')
@@ -110,15 +113,14 @@ const currentProjectCtrl = async (state: State, oldState: State) => {
 
 };
 
-const fetchingProjectsCtrl = (state: State, oldState: State) => {
+const fetchingProjectsCtrl = async (state: State, oldState: State) => {
   if (areArraysEqual(state.projects, oldState.projects)) return
   console.log('fetchingProjectsCtrl')
-
+  
   forms['main'].elements['projects-list'].innerHTML = 
   state.projects
-    .map(({ name, id } : Partial<Project>) => `<option value="${id}">${name}</option>`)
-    .join(' ')
-
+  .map(({ name, id } : Partial<Project>) => `<option value="${id}">${name}</option>`)
+  .join(' ')
   forms['main'].elements['number-projects'].setAttribute('value', state.projects.length)
 };
 
@@ -149,6 +151,7 @@ forms['main'].elements['logout'].onclick = () => forms['main'].onsubmit = (e: Ev
 
 window.onload = () => {
   state.loading = true
+  // body is hidden to avoid weird flicker effects
   document.body.removeAttribute('hidden')
   checkExistingToken()
 }
@@ -161,6 +164,7 @@ forms['main'].elements['projects-list'].onchange = () => {
 forms['main'].elements['import'].onclick = () => forms['main'].onsubmit = (e: Event) => { 
   e.preventDefault()
   importColors()
+  fetchProjects()
 }
 
 forms['main'].elements['refresh'].onclick = () => forms['main'].onsubmit = (e: Event) => { 
@@ -201,7 +205,6 @@ const startProgress = () => {
     progress.value = from
     progress.innerHTML = `${from} %`
 }
-
 // const figmaTokens = (): Promise<Array<any>> => {
 //   return new Promise((resolve, reject) => {
 //     onmessage = ({ data }) => {
