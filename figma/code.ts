@@ -114,7 +114,6 @@ const preflightColors = (payload: AddColorsPayload): Array<any> | false => {
       const key = color.split(' ')[0]
       const indexToRemove = mappedColours.findIndex(mappedColour => mappedColour.split(' ')[0] === key)
       const j = localStyles.findIndex(style => style.key === mappedColours[indexToRemove].split(' ')[0])
-      console.log(j)
       if (j >= 0 ) { 
         const paint = localStyles[j].paints[0] as SolidPaint
         result.push({ 
@@ -190,7 +189,7 @@ let windowSize = {
 figma.showUI(__html__, windowSize)
 
 figma.ui.onmessage = (msg: PluginMessage) => {
-  console.log('Got message:', msg)
+  // console.log('Got message:', msg)
   const { type, payload } = msg
 
   switch (type) {

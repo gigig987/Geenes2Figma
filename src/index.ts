@@ -150,7 +150,7 @@ forms['main'].elements['logout'].onclick = () => forms['main'].onsubmit = (e: Ev
 }
 
 window.onload = () => {
-  state.loading = true
+  // state.loading = true
   // body is hidden to avoid weird flicker effects
   document.body.removeAttribute('hidden')
   checkExistingToken()
