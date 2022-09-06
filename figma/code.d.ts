@@ -8,6 +8,7 @@ interface GeenesColor {
   description: string;
   uid: string;
   rgb: RGB;
+  hex: string;
 }
 
 interface AddColorsPayload {

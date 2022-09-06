@@ -180,14 +180,25 @@ const preflightColors = (payload: AddColorsPayload): Array<any> | false => {
     return false
   }
 }
-const a = null
+const figmaTokensImport = (payload: AddColorsPayload, ): string | false => {
+  const figmaTokensVal = figma.root.getSharedPluginData('tokens', 'values')
+  if (figmaTokensVal) {
+    const newTokens = payload.colors.map(color => ({value: color.hex , type: 'color', name: color.name}))
+    const tokensObj = JSON.parse(figmaTokensVal)
+    tokensObj.global = [...tokensObj.global, ...newTokens]
+    console.log(tokensObj)
+    figma.root.setSharedPluginData("tokens", "values", JSON.stringify(tokensObj))
+    return figma.root.getSharedPluginData('tokens', 'values')
+  } else {
+    return false
+  }
+}
+
 let windowSize = {
   width: 320,
   height: 520,
 }
-
 figma.showUI(__html__, windowSize)
-
 figma.ui.onmessage = (msg: PluginMessage) => {
   // console.log('Got message:', msg)
   const { type, payload } = msg
@@ -250,9 +261,14 @@ figma.ui.onmessage = (msg: PluginMessage) => {
       figma.ui.postMessage({ type: 'preflightColors', value: preflightColors(<AddColorsPayload>payload) })
       break
 
-    case 'readFigmaTokens':
-      figma.ui.postMessage({ type: 'readFigmaTokens', value: JSON.parse(figma.root.getSharedPluginData("tokens", "values")) })
-      figma.root.setSharedPluginData("tokens", "values", JSON.stringify({ global: [{ name: 'ciao', value: '40%', type: 'opacity' }] }))
+    case 'figmaTokensImport':
+      const a = figmaTokensImport(<AddColorsPayload>payload)
+      if (a) {
+        figma.ui.postMessage({ type: 'figmaTokensImport', success: true, value: a })
+      } else {
+        figma.ui.postMessage({ type: 'figmaTokensImport', succes: false })
+        figma.notify('Figma tokens not available. Start it first')
+      }
       break
   }
 }

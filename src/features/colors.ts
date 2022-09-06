@@ -33,7 +33,7 @@ const fetchColors = () => {
   }
   const allColors = flatten(state.currentProject.palette.map(extractAllColors)).filter((color: Color) => color)
   return flatten(allColors.map((color: Color) => color.variations.map((variation: Variation) => {
-    return { rgb: hexToRgb(variation.hex), name: `${color.name}/${variation.name}`, description: color.description, uid: `${color.id}_${variation.id}` }
+    return { rgb: hexToRgb(variation.hex), hex: variation.hex, name: `${color.name}/${variation.name}`, description: color.description, uid: `${color.id}_${variation.id}` }
   })))
 }
 
@@ -59,6 +59,24 @@ export const preflightColors = (): Promise<Array<any>> => {
     parent.postMessage({
       pluginMessage: {
         type: 'preflightColors', payload: {
+          lastUpdate: state.currentProject.updateDate._seconds,
+          colors: fetchColors(),
+          id: state.currentProject.id
+        }
+      },
+    }, '*')
+  })
+}
+export const importColorsInFigmaTokens = (): Promise<Array<any>> => {
+  return new Promise((resolve, reject) => {
+    onmessage = ({ data }) => {
+      if (data.pluginMessage && data.pluginMessage.type === 'figmaTokensImport') {
+        resolve(data.pluginMessage.value)
+      }
+    }
+    parent.postMessage({
+      pluginMessage: {
+        type: 'figmaTokensImport', payload: {
           lastUpdate: state.currentProject.updateDate._seconds,
           colors: fetchColors(),
           id: state.currentProject.id

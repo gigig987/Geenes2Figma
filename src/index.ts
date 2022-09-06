@@ -4,7 +4,7 @@ import './reactivity.css'
 import { areArraysEqual, easeOutCubic } from  './utils/functions'
 import { login, undoLogin, logout, checkExistingToken } from './features/authorisation'
 import { fetchProjects, Project, calculateLastSynch, setCurrentProjectOnFigma } from './features/projects'
-import { importColors, preflightColors } from './features/colors'
+import { importColors, preflightColors, importColorsInFigmaTokens } from './features/colors'
 import { state } from './utils/state'
 import { render, cancel } from 'timeago.js'
 import { renderQuote } from './utils/quotes'
@@ -205,21 +205,14 @@ const startProgress = () => {
     progress.value = from
     progress.innerHTML = `${from} %`
 }
-// const figmaTokens = (): Promise<Array<any>> => {
-//   return new Promise((resolve, reject) => {
-//     onmessage = ({ data }) => {
-//       if (data.pluginMessage && data.pluginMessage.type === 'readFigmaTokens') {
-//         resolve(data.pluginMessage.value)
-//       }
-//     }
-//     parent.postMessage({
-//       pluginMessage: { type: 'readFigmaTokens' },
-//     }, '*')
-//   })
-// }
 
-// forms['main'].elements['figma-tokens'].onclick = () => forms['main'].onsubmit = async (e: Event) => { 
-//   e.preventDefault()
-//   const p = await figmaTokens()
-//   console.log(p)
-// }
+forms['main'].elements['figma-tokens'].onclick = () => forms['main'].onsubmit = async (e: Event) => { 
+  e.preventDefault()
+  try {
+    const p = await importColorsInFigmaTokens()
+    console.log(p)
+    
+  } catch (error) {
+    console.error(error)
+  }
+}
