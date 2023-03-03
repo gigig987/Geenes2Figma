@@ -1,16 +1,17 @@
 import { state } from  '../utils/state'
 
-const HOST = 'https://geenes-figma.herokuapp.com'
+const HOST = 'https://important-lime-shirt.cyclic.app'
 
 const authenticateAndGetToken = async () => {
   const { read_key, write_key } = await (await fetch(`${HOST}/keys`)).json()
+  // console.log(read_key, write_key)
   window.open(`${HOST}/start?write_key=${encodeURIComponent(write_key)}`, '_blank')
   let accessToken
   while (true && state.isAuthorising) {
     console.log('try to get token')
     try {
       const json = await (await fetch(`${HOST}/finish?read_key=${encodeURIComponent(read_key)}`)).json()
-      console.log(json)
+      // console.log(json)
       if (json.access_token !== null) {
         accessToken = json.access_token
         break
@@ -73,9 +74,9 @@ export const logout = async () => {
 export const checkExistingToken = async () => {
   state.accessToken = await getToken()
   if (state.accessToken) {
-    console.log('access token set', state.accessToken)
+    // console.log('access token set', state.accessToken)
   } else {
-    console.log('NO access token')
+    console.error('NO access token')
   }
 
 }

@@ -64,29 +64,29 @@ const getLastSynch = (): Promise<Array<any>> => {
 }
 
 export const fetchProjects = async () => {
-  console.log('fetching')
+  console.info('fetching')
   state.loading = true
   try {
     const { projects } = await getProjects()
     if (projects && projects.length) {
-      console.log(projects)
+      // console.log(projects)
       state.projects = projects
       const figmaCurrentProject = await getFigmaCurrentProject()
       const existingProjectIndex = projects.findIndex((data: Project) => data.id === figmaCurrentProject)
-      console.log('HEEEY', existingProjectIndex, figmaCurrentProject)
+      // console.log('HEEEY', existingProjectIndex, figmaCurrentProject)
       // if no current project can be found fall back on the first one
       // this can be because the project doesn't exist on geenes anymore or a current project was never set
       state.currentProject = existingProjectIndex < 0 ? projects[0] : projects[existingProjectIndex]
     } else {
       console.warn('no projects available')
     }
-    console.log('finished to fetch')
+    console.info('finished to fetch')
     state.loading = false
   } catch (error) {
     console.error(error)
     state.accessToken = null
     state.showExpiredMessage = true
-    console.log('finished to fetch')
+    console.info('finished to fetch')
     state.loading = false
   }
 }

@@ -22,7 +22,7 @@ const forms = document.forms as Forms
 // Reactivity controllers
 const isAuthorisingCtrl = (state: State, oldState: State) => {
   if (state.isAuthorising === oldState.isAuthorising) return
-  console.log('isAuthorisingCtrl')
+  // console.log('isAuthorisingCtrl')
 
   forms['main'].elements['is-authorising'].checked = state.isAuthorising
 };
@@ -31,14 +31,14 @@ const authorisationCtrl = (state: State, oldState: State) => {
 
   forms['main'].elements['authorised'].checked = !!state.accessToken
   if (state.accessToken) {
-    console.log(' fetch projects')
+    // console.log(' fetch projects')
     fetchProjects()
   }
 };
 const generalLoginCtrl = (state: State, oldState: State) => {
   if (state.loading === oldState.loading) return
 
-  console.log('generalLoginCtrl', state.loading)
+  // console.log('generalLoginCtrl', state.loading)
 
   forms['main'].elements['is-loading'].checked = state.loading
   let change = new Event('change');
@@ -47,10 +47,10 @@ const generalLoginCtrl = (state: State, oldState: State) => {
 const currentProjectCtrl = async (state: State, oldState: State) => {
   if (state.currentProject === oldState.currentProject) return
 
-  console.log('currentProjectCtrl', state.currentProject)
+  // console.log('currentProjectCtrl', state.currentProject)
   if (!state.currentProject) return
   const a =  await setCurrentProjectOnFigma()
-  console.log('setCurrentProjectOnFigma', await setCurrentProjectOnFigma())
+  // console.log('setCurrentProjectOnFigma', await setCurrentProjectOnFigma())
   forms['main'].elements['projects-list'].value = state.currentProject.id
 
   const {colorsAmount, updateDate} = state.currentProject
@@ -106,7 +106,7 @@ const currentProjectCtrl = async (state: State, oldState: State) => {
           rgb(${Math.round(rnew * 255)},${Math.round(gnew * 255)},${Math.round(bnew * 255)}) 51%
           )`
       }
-      console.log(color)
+      // console.log(color)
       colorEl!.style.background = color
       table.appendChild(rowTemplate!)
   })
@@ -115,7 +115,7 @@ const currentProjectCtrl = async (state: State, oldState: State) => {
 
 const fetchingProjectsCtrl = async (state: State, oldState: State) => {
   if (areArraysEqual(state.projects, oldState.projects)) return
-  console.log('fetchingProjectsCtrl')
+  // console.log('fetchingProjectsCtrl')
   
   forms['main'].elements['projects-list'].innerHTML = 
   state.projects
@@ -210,7 +210,7 @@ forms['main'].elements['figma-tokens'].onclick = () => forms['main'].onsubmit = 
   e.preventDefault()
   try {
     const p = await importColorsInFigmaTokens()
-    console.log(p)
+    // console.log(p)
     
   } catch (error) {
     console.error(error)

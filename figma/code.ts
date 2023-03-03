@@ -186,7 +186,7 @@ const figmaTokensImport = (payload: AddColorsPayload, ): string | false => {
     const newTokens = payload.colors.map(color => ({value: color.hex , type: 'color', name: color.name}))
     const tokensObj = JSON.parse(figmaTokensVal)
     tokensObj.global = [...tokensObj.global, ...newTokens]
-    console.log(tokensObj)
+    // console.log(tokensObj)
     figma.root.setSharedPluginData("tokens", "values", JSON.stringify(tokensObj))
     return figma.root.getSharedPluginData('tokens', 'values')
   } else {
